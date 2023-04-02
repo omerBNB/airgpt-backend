@@ -7,7 +7,7 @@ async function query(filterBy = { labels: '', where: '' }) {
     try {
         const criteria = {}
         if (filterBy.labels) {
-            criteria.labels = { $in: filterBy.labels, $options: 'i' }
+            criteria.labels = { $regex: filterBy.labels, $options: 'i' }
         }
         if (filterBy.where) {
             criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' }
@@ -15,9 +15,9 @@ async function query(filterBy = { labels: '', where: '' }) {
         if(filterBy.guests){
             criteria.capacity = {$gte: guest}
         }
-        console.log('criteria', criteria)
         const collection = await dbService.getCollection('stay')
-        var stays = await collection.find(criteria).toArray()
+        var stays = await collection.find(criteria).limit(50).toArray()
+        console.log('stays',stays.length)
         return stays
     } catch (err) {
         logger.error('cannot find stays', err)
