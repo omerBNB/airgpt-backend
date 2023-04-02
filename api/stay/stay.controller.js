@@ -1,6 +1,6 @@
 const stayService = require('./stay.service.js')
-// const stayService = require('./stay.service.jsonfile')
 const logger = require('../../services/logger.service')
+// const stayService = require('./stay.service.jsonfile')
 
 module.exports = {
   getStays,
@@ -9,7 +9,7 @@ module.exports = {
   updateStay,
   removeStay,
   addStayMsg,
-  removeStayMsg
+  removeStayMsg,
 }
 
 async function getStays(req, res) {
@@ -17,14 +17,25 @@ async function getStays(req, res) {
     logger.debug('Getting stays')
     const filterBy = {
       where: req.query.where || '',
-      labels: req.query.label || ''
+      labels: req.query.label || '',
     }
     const stays = await stayService.query(filterBy)
+    _AddTotalRateForEachStay(stays)
     res.json(stays)
   } catch (err) {
     logger.error('Failed to get stays', err)
     res.status(500).send({ err: 'Failed to get stays' })
   }
+}
+
+function _AddTotalRateForEachStay(stays) {
+  stays.forEach((stay) => {
+    const total = stay.reviews.reduce((acc, review) => {
+      return (acc += review.rate)
+    }, 0)
+    const rateAvg = total / stay.reviews.length
+    stay.rate = +rateAvg.toFixed(2).replace(/\.00$/, '').replace(/\.0$/, '')
+  })
 }
 
 async function getStayById(req, res) {
@@ -60,7 +71,6 @@ async function updateStay(req, res) {
   } catch (err) {
     logger.error('Failed to update stay', err)
     res.status(500).send({ err: 'Failed to update stay' })
-
   }
 }
 
@@ -75,23 +85,23 @@ async function removeStay(req, res) {
   }
 }
 
+///**** there is no AddStayMsg ****/
 async function addStayMsg(req, res) {
   const { loggedinUser } = req
   try {
     const stayId = req.params.id
     const msg = {
       txt: req.body.txt,
-      by: loggedinUser
+      by: loggedinUser,
     }
     const savedMsg = await stayService.addStayMsg(stayId, msg)
     res.json(savedMsg)
   } catch (err) {
     logger.error('Failed to update stay', err)
     res.status(500).send({ err: 'Failed to update stay' })
-
   }
 }
-
+///**** there is no removeStayMsg ****/
 async function removeStayMsg(req, res) {
   const { loggedinUser } = req
   try {
@@ -103,6 +113,5 @@ async function removeStayMsg(req, res) {
   } catch (err) {
     logger.error('Failed to remove stay msg', err)
     res.status(500).send({ err: 'Failed to remove stay msg' })
-
   }
 }
