@@ -25,7 +25,7 @@ async function query(filterBy = { labels: '', where: '' }) {
         if (filterBy.guests) {
             criteria.capacity = { $gte: guest }
         }
-        console.log('criteria', criteria)
+        // console.log('criteria', criteria)
         const collection = await dbService.getCollection('stay')
         var stays = await collection.find(criteria).toArray()
         return stays
