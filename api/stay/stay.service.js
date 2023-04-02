@@ -3,6 +3,16 @@ const logger = require('../../services/logger.service')
 const utilService = require('../../services/util.service')
 const ObjectId = require('mongodb').ObjectId
 
+module.exports = {
+    remove,
+    query,
+    getById,
+    add,
+    update,
+    addStayMsg,
+    removeStayMsg
+}
+
 async function query(filterBy = { labels: '', where: '' }) {
     try {
         const criteria = {}
@@ -12,8 +22,8 @@ async function query(filterBy = { labels: '', where: '' }) {
         if (filterBy.where) {
             criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' }
         }
-        if(filterBy.guests){
-            criteria.capacity = {$gte: guest}
+        if (filterBy.guests) {
+            criteria.capacity = { $gte: guest }
         }
         console.log('criteria', criteria)
         const collection = await dbService.getCollection('stay')
@@ -83,19 +93,32 @@ async function add(stay) {
 async function update(stay) {
     try {
         const stayToSave = {
-            vendor: stay.vendor,
-            price: stay.price
+            price: stay.price,
+            amenities: stay.amenities,
+            capacity: stay.capacity,
+            equipment: stay.equipment,
+            host: stay.host,
+            imgUrls: stay.imgUrls,
+            labels: stay.labels,
+            likedByUsers: stay.likedByUsers,
+            loc: stay.loc,
+            name: stay.name,
+            price: stay.price,
+            reviews: stay.reviews,
+            roomType: stay.roomType,
+            summary: stay.summary,
+            type: stay.type,
         }
         const collection = await dbService.getCollection('stay')
         await collection.updateOne({ _id: new ObjectId(stay._id) }, { $set: stayToSave })
         return stay
     } catch (err) {
-        logger.error(`cannot update stay ${stayId}`, err)
+        logger.error(`cannot update stay ${stay._id}`, err)
         throw err
     }
 }
 
-async function addstayMsg(stayId, msg) {
+async function addStayMsg(stayId, msg) {
     try {
         msg.id = utilService.makeId()
         const collection = await dbService.getCollection('stay')
@@ -107,7 +130,7 @@ async function addstayMsg(stayId, msg) {
     }
 }
 
-async function removestayMsg(stayId, msgId) {
+async function removeStayMsg(stayId, msgId) {
     try {
         const collection = await dbService.getCollection('stay')
         await collection.updateOne({ _id: new ObjectId(stayId) }, { $pull: { msgs: { id: msgId } } })
@@ -116,14 +139,4 @@ async function removestayMsg(stayId, msgId) {
         logger.error(`cannot add stay msg ${stayId}`, err)
         throw err
     }
-}
-
-module.exports = {
-    remove,
-    query,
-    getById,
-    add,
-    update,
-    addstayMsg,
-    removestayMsg
 }
