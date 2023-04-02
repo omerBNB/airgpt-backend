@@ -1,0 +1,4 @@
+module.exports = {
+  dbURL: 'mongodb+srv://omerbnb:Hn1cPq0dsXmmOGSd@cluster0.cjkibmj.mongodb.net/test',
+  dbName : 'stay_db'
+}

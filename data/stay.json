@@ -1,0 +1,69 @@
+[
+  {
+    "_id": "10006546",
+    "name": "Ribeira Charming Duplex",
+    "type": "House",
+    "imgUrls": [
+      "../../src/imgs/imgs_test/ListImgsTest/a/3.webp",
+      "../../src/imgs/imgs_test/ListImgsTest/a/1.webp",
+      "../../src/imgs/imgs_test/ListImgsTest/a/2.webp",
+      "../../src/imgs/imgs_test/ListImgsTest/a/4.webp",
+      "../../src/imgs/imgs_test/ListImgsTest/a/5.webp"
+    ],
+    "price": 80.0,
+    "summary": "Fantastic duplex apartment with three bedrooms, located in the historic area of Porto, Ribeira (Cube)...",
+    "capacity": 8, 
+    "equipment": { "bedroomNum": 5, "bedsNum": 11, "bathNum": 4 },
+    "amenities": ["TV", "Wifi", "Kitchen", "Smoking allowed", "Pets allowed", "Cooking basics"],
+    "labels": ["Top of the world", "Trending", "Play", "Tropical", "Castles"],
+    "host": {
+      "_id": "u101",
+      "fullname": "Inon",
+      "description": "Hi there, I'm Inon, a journalist who loves to write. My house has a home office and I'd be happy to share some of my writing tips with you during your stay.",
+      "imgUrl": "../../src/imgs/imgs_test/inon.jpg",
+      "isSuperHost": true
+    },
+    "loc": {
+      "country": "Portugal",
+      "countryCode": "PT",
+      "city": "Porto",
+      "address": "17 Kombo st",
+      "lat": -8.61308,
+      "lng": 41.1413
+    },
+    "reviews": [
+      {
+        "id": "madeId",
+        "txt": "Very helpful hosts. Cooked traditional...",
+        "rate": 4,
+        "by": {
+          "_id": "u102",
+          "fullname": "user2",
+          "imgUrl": "../../src/imgs/imgs_test/omer.jpg"
+        }
+      },
+      {
+        "id": "madeId",
+        "txt": "Very helpful hosts. Cooked traditional...",
+        "rate": 4,
+        "by": {
+          "_id": "u102",
+          "fullname": "user2",
+          "imgUrl": "../../src/imgs/imgs_test/omer.jpg"
+        }
+      },
+      {
+        "id": "u103",
+        "txt": "nice...",
+        "rate": 2,
+        "by": {
+          "_id": "u102yuval",
+          "fullname": "Yuval",
+          "imgUrl": "../../src/imgs/imgs_test/yuval.jpg"
+        }
+      }
+    ],
+
+    "likedByUsers": ["mini-user"]
+  }
+]
