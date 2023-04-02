@@ -10,14 +10,14 @@ module.exports = {
     add,
     update,
     addStayMsg,
-    removeStayMsg
+    removeStayMsg,
 }
 
 async function query(filterBy = { labels: '', where: '' }) {
     try {
         const criteria = {}
         if (filterBy.labels) {
-            criteria.labels = { $in: filterBy.labels, $options: 'i' }
+            criteria.labels = { $in: [filterBy.labels] }
         }
         if (filterBy.where) {
             criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' }
@@ -25,6 +25,7 @@ async function query(filterBy = { labels: '', where: '' }) {
         if (filterBy.guests) {
             criteria.capacity = { $gte: guest }
         }
+
         // console.log('criteria', criteria)
         const collection = await dbService.getCollection('stay')
         var stays = await collection.find(criteria).toArray()
@@ -35,6 +36,7 @@ async function query(filterBy = { labels: '', where: '' }) {
     }
 }
 
+///**reference**/
 // let sort = {}
 // let criteria = {}
 // if (filterBy) {
@@ -55,7 +57,6 @@ async function query(filterBy = { labels: '', where: '' }) {
 //     throw err
 // }
 // }
-
 
 async function getById(stayId) {
     try {
