@@ -1,7 +1,16 @@
 const stayService = require('./stay.service.js')
+const logger = require('../../services/logger.service')
 // const stayService = require('./stay.service.jsonfile')
 
-const logger = require('../../services/logger.service')
+module.exports = {
+  getStays,
+  getStayById,
+  addStay,
+  updateStay,
+  removeStay,
+  addStayMsg,
+  removeStayMsg,
+}
 
 async function getStays(req, res) {
   try {
@@ -76,6 +85,7 @@ async function removeStay(req, res) {
   }
 }
 
+///**** there is no AddStayMsg ****/
 async function addStayMsg(req, res) {
   const { loggedinUser } = req
   try {
@@ -84,14 +94,14 @@ async function addStayMsg(req, res) {
       txt: req.body.txt,
       by: loggedinUser,
     }
-    const savedMsg = await stayService.addstayMsg(stayId, msg)
+    const savedMsg = await stayService.addStayMsg(stayId, msg)
     res.json(savedMsg)
   } catch (err) {
     logger.error('Failed to update stay', err)
     res.status(500).send({ err: 'Failed to update stay' })
   }
 }
-
+///**** there is no removeStayMsg ****/
 async function removeStayMsg(req, res) {
   const { loggedinUser } = req
   try {
@@ -104,14 +114,4 @@ async function removeStayMsg(req, res) {
     logger.error('Failed to remove stay msg', err)
     res.status(500).send({ err: 'Failed to remove stay msg' })
   }
-}
-
-module.exports = {
-  getStays,
-  getStayById,
-  addStay,
-  updateStay,
-  removeStay,
-  addStayMsg,
-  removeStayMsg,
 }
