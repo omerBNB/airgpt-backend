@@ -72,11 +72,14 @@ async function remove(orderId) {
 async function update(order) {
   try {
     // peek only updatable properties
-    const orderToSave = {
-      _id: new ObjectId(order._id), // needed for the returnd obj
-      fullname: order.fullname,
-      score: order.score,
-    }
+    // const orderToSave = {
+    //     _id: new ObjectId(order._id), // needed for the returnd obj
+    //     hostId: order.hostId,
+    //     buyer: order.buyer,
+    //     totalPrice: order.totalPrice
+    // }
+    const orderToSave = order
+    orderToSave._id = new ObjectId(order._id)
     const collection = await dbService.getCollection('order')
     await collection.updateOne({ _id: orderToSave._id }, { $set: orderToSave })
     return orderToSave
@@ -89,13 +92,7 @@ async function update(order) {
 async function add(order) {
   try {
     // peek only updatable fields!
-    const orderToAdd = {
-      ordername: order.ordername,
-      password: order.password,
-      fullname: order.fullname,
-      imgUrl: order.imgUrl,
-      score: 100,
-    }
+    const orderToAdd = order
     const collection = await dbService.getCollection('order')
     await collection.insertOne(orderToAdd)
     return orderToAdd
