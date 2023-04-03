@@ -60,6 +60,7 @@ async function query(filterBy = { labels: '', where: '' }) {
 
 async function getById(stayId) {
   try {
+    console.log('stayId:', stayId)
     const collection = await dbService.getCollection('stay')
     const stay = collection.findOne({ _id: new ObjectId(stayId) })
     return stay
