@@ -48,6 +48,7 @@ async function getById(orderId) {
     throw err
   }
 }
+
 async function getByordername(ordername) {
   try {
     const collection = await dbService.getCollection('order')
@@ -69,7 +70,7 @@ async function remove(orderId) {
   }
 }
 
-async function update(order) {
+async function update(order) {  
   try {
     // peek only updatable properties
     // const orderToSave = {
