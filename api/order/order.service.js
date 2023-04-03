@@ -72,13 +72,6 @@ async function remove(orderId) {
 
 async function update(order) {  
   try {
-    // peek only updatable properties
-    // const orderToSave = {
-    //     _id: new ObjectId(order._id), // needed for the returnd obj
-    //     hostId: order.hostId,
-    //     buyer: order.buyer,
-    //     totalPrice: order.totalPrice
-    // }
     const orderToSave = order
     orderToSave._id = new ObjectId(order._id)
     const collection = await dbService.getCollection('order')
