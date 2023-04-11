@@ -40,7 +40,6 @@ function remove(stayId) {
 
 function save(stay) {
     var savedstay
-    console.log('stay', stay)
     if (stay._id) {
         savedstay = gStays.find(currstay => currstay._id === stay._id)
         if (!savedstay) return Promise.reject('Unknonwn stay')

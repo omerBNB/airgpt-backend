@@ -16,8 +16,7 @@ async function query(filterBy = {}) {
   const criteria = _buildCriteria(filterBy)
   try {
     const collection = await dbService.getCollection('order')
-    var orders = await collection.find({}).toArray()
-    console.log('order', orders)
+    let orders = await collection.find(criteria).toArray()
     orders = orders.map((order) => {
       order.createdAt = new ObjectId(order._id).getTimestamp()
       // Returning fake fresh data
@@ -70,7 +69,7 @@ async function remove(orderId) {
   }
 }
 
-async function update(order) {  
+async function update(order) {
   try {
     const orderToSave = order
     orderToSave._id = new ObjectId(order._id)
@@ -98,6 +97,11 @@ async function add(order) {
 
 function _buildCriteria(filterBy) {
   const criteria = {}
+  // criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' }
+  if (filterBy.buyerId) criteria['buyer._id'] = { $regex: filterBy.buyerId, $options: 'i' }
+  // if (filterBy.buyerId) criteria.buyerId = { $regex: filterBy.buyerId, $options: 'i' }
+
+
   if (filterBy.txt) {
     const txtCriteria = { $regex: filterBy.txt, $options: 'i' }
     criteria.$or = [

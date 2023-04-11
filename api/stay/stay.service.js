@@ -25,8 +25,6 @@ async function query(filterBy = { labels: '', where: '' }, sort = { by: 'rate' }
     if (filterBy.guests) {
       criteria.capacity = { $gte: guest }
     }
-
-    // console.log('criteria', criteria)
     const collection = await dbService.getCollection('stay')
     // var stays = await collection.find(criteria).limit(50).toArray()
     var stays = await collection
@@ -66,7 +64,6 @@ async function getById(stayId) {
   try {
     const collection = await dbService.getCollection('stay')
     const stay = collection.findOne({ _id: new ObjectId(stayId) })
-    console.log('stay!!!:', stay)
     return stay
   } catch (err) {
     logger.error(`while finding stay ${stayId}`, err)
@@ -89,7 +86,6 @@ async function add(stay) {
   try {
     const collection = await dbService.getCollection('stay')
     await collection.insertOne(stay)
-    console.log('stay', stay)
     return stay
   } catch (err) {
     logger.error('cannot insert stay', err)
@@ -118,7 +114,6 @@ async function update(stay) {
     }
     const collection = await dbService.getCollection('stay')
     await collection.updateOne({ _id: new ObjectId(stay._id) }, { $set: stayToSave })
-    console.log('stay', stay)
     return stay
   } catch (err) {
     logger.error(`cannot update stay ${stay._id}`, err)

@@ -35,7 +35,6 @@ async function addReview(req, res) {
  
     try {
         var review = req.body
-        console.log('review',loggedinUser)
         review.byUserId = loggedinUser._id
         review = await reviewService.add(review)
         
