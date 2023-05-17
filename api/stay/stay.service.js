@@ -26,11 +26,11 @@ async function query(filterBy = { labels: '', where: '' }, sort = { by: 'rate' }
       criteria.capacity = { $gte: guest }
     }
     const collection = await dbService.getCollection('stay')
-    // var stays = await collection.find(criteria).limit(50).toArray()
-    var stays = await collection
-      .find(criteria)
-      .sort({ [sort.by]: -1 })
-      .toArray()
+    var stays = await collection.find(criteria).limit(50).sort({ [sort.by]: -1 }).toArray()
+    // var stays = await collection
+    //   .find(criteria)
+    //   .sort({ [sort.by]: -1 })
+    //   .toArray()
     return stays
   } catch (err) {
     logger.error('cannot find stays', err)
