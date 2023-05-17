@@ -14,11 +14,12 @@ async function getOrder(req, res) {
 
 async function getOrders(req, res) {
     try {
-        // const filterBy = {
-        //     txt: req.query?.txt || '',
-        //     minBalance: +req.query?.minBalance || 0
-        // }
-        const orders = await orderService.query()
+        const filterBy = {
+            buyerId: req.query?.buyerId || '',
+            txt: req.query?.txt || '',
+            minBalance: +req.query?.minBalance || 0
+        }
+        const orders = await orderService.query(filterBy)
         res.send(orders)
     } catch (err) {
         logger.error('Failed to get orders', err)
