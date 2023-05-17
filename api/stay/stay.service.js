@@ -20,7 +20,7 @@ async function query(filterBy = { labels: '', where: '' }, sort = { by: 'rate' }
       criteria.labels = { $in: [filterBy.labels] }
     }
     if (filterBy.where) {
-      criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' }
+      criteria['loc.country'] = { $regex: filterBy.where, $options: 'i' } 
     }
     if (filterBy.guests) {
       criteria.capacity = { $gte: guest }
