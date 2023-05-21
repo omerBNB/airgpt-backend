@@ -2,6 +2,14 @@ const orderService = require('./order.service')
 const socketService = require('../../services/socket.service')
 const logger = require('../../services/logger.service')
 
+module.exports = {
+    getOrder,
+    getOrders,
+    deleteOrder,
+    updateOrder,
+    addOrder
+}
+
 async function getOrder(req, res) {
     try {
         const order = await orderService.getById(req.params.id)
@@ -59,12 +67,4 @@ async function updateOrder(req, res) {
         logger.error('Failed to update order', err)
         res.status(500).send({ err: 'Failed to update order' })
     }
-}
-
-module.exports = {
-    getOrder,
-    getOrders,
-    deleteOrder,
-    updateOrder,
-    addOrder
 }
