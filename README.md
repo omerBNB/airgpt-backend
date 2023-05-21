@@ -1,5 +1,3 @@
-Certainly! Here's a generated README file for the AirGPT Backend repository:
-
 # AirGPT Backend
 
 This repository contains the backend code for AirGPT, a natural language processing application built with OpenAI's GPT-3.5 model. AirGPT allows users to interact with the model via a RESTful API.
