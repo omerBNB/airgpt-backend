@@ -6,7 +6,6 @@ const ObjectId = require('mongodb').ObjectId
 module.exports = {
   query,
   getById,
-  getByordername,
   remove,
   update,
   add,
@@ -20,7 +19,6 @@ async function query(filterBy = {}) {
     orders = orders.map((order) => {
       order.createdAt = new ObjectId(order._id).getTimestamp()
       // Returning fake fresh data
-      // order.createdAt = Date.now() - (1000 * 60 * 60 * 24 * 3) // 3 days ago
       return order
     })
     return orders
@@ -34,27 +32,9 @@ async function getById(orderId) {
   try {
     const collection = await dbService.getCollection('order')
     const order = await collection.findOne({ _id: new ObjectId(orderId) })
-
-    order.givenReviews = await reviewService.query({ byorderId: new ObjectId(order._id) })
-    // order.givenReviews = order.givenReviews.map(review => {
-    //     delete review.byorder
-    //     return review
-    // })
-
     return order
   } catch (err) {
     logger.error(`while finding order by id: ${orderId}`, err)
-    throw err
-  }
-}
-
-async function getByordername(ordername) {
-  try {
-    const collection = await dbService.getCollection('order')
-    const order = await collection.findOne({ ordername })
-    return order
-  } catch (err) {
-    logger.error(`while finding order by ordername: ${ordername}`, err)
     throw err
   }
 }
