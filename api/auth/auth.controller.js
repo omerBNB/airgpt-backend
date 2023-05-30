@@ -48,4 +48,4 @@ async function logout(req, res) {
     } catch (err) {
         res.status(500).send({ err: 'Failed to logout' })
     }
-}
+} 
